@@ -51,20 +51,20 @@ function Sortage(data) {
 
 
 
-// let thebigest = userArrayObject.sort((a, b) => +b.age - +a.age);
+let thebigest = userArrayObject.sort((a, b) => +b.age - +a.age);
 
-// let theBigIcome = userArrayObject.reduce((acc, item) => {
-//     return acc += +item.income
-// }, 0) / userArrayObject.length
+let theBigIcome = userArrayObject.reduce((acc, item) => {
+    return acc += +item.income
+}, 0) / userArrayObject.length
 
-// console.log(`Average salary ::${theBigIcome}`)
+console.log(`Average salary ::${theBigIcome}`)
 
 
-// console.log(`the oldest ${thebigest[0].myName}`)
+console.log(`the oldest ${thebigest[0].myName}`)
 
-// function Dataobj(data) {
-//     console.log(data)
-//     const arr = []
-//     arr.push(data)
-//     return arr
-// }
+function Dataobj(data) {
+    console.log(data)
+    const arr = []
+    arr.push(data)
+    return arr
+}
