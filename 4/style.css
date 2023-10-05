@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+}
+.nav-aside {
+  max-width: 50vh;
+  height: 100vh;
+  background-image: linear-gradient(rgb(252, 123, 119), rgb(49, 213, 246));
+  display: flex;
+  flex-direction: column;
+}
+
+.form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  gap: 20px;
+}
+
+.styinput {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.form input {
+  height: 30px;
+  border-radius: 15px;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+}
+
+.form button {
+  height: 60px;
+  padding: 4px 80px;
+  border: 3px solid #16a085;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.form button:hover {
+  background-color: #12cbc4;
+  transition: 1s;
+  outline: none;
+}
+
+.the-area-Notification {
+  box-shadow: 0 8px 50px #00000026;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vh;
+  height: 100vh;
+}
+
+#notification {
+  display: none;
+  position: absolute;
+  text-align: center;
+  width: 100px;
+  height: 100px;
+  padding: auto;
+  background-color: red;
+  border-radius: 20px;
+  box-shadow: 0 1px 15px rgb(128, 128, 128);
+}
+
+.democlass {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

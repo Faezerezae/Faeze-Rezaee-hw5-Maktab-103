@@ -1,0 +1,105 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-image: url(./img/R.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+}
+
+.card {
+  width: 400px;
+  height: 500px;
+  background-image: linear-gradient(rgb(120, 119, 252), rgb(210, 49, 246));
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  box-shadow: 0 8px 25px #00000026;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-picture {
+  width: 60%;
+  height: 50%;
+}
+
+h2 {
+  text-align: center;
+  color: #fff;
+}
+
+.patern-user-pass {
+  border-bottom: 1px solid white;
+  width: 80%;
+  padding: 5px;
+}
+
+.patern-input {
+  border: none;
+  color: white;
+  outline: none;
+  background-color: transparent;
+}
+
+input::placeholder {
+  color: white;
+  padding: 10px;
+}
+
+.bi {
+  color: white;
+}
+
+.p-remember {
+  width: 80%;
+  font-size: 12px;
+  color: white;
+}
+
+.login {
+  width: 80px;
+  height: 40px;
+  padding: 10px;
+  background-color: white;
+  color: black;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.login:hover {
+  background-color: #633da5;
+}
+
+.forgot-pass {
+  width: 150px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  color: white;
+  margin-top: 20px;
+  cursor: pointer;
+}

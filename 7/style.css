@@ -1,0 +1,76 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;1,400;1,600&display=swap");
+
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background-color: rgb(251, 145, 247);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  color: white;
+  font-family: "Playfair Display", serif;
+}
+
+.card {
+  width: 320px;
+  height: 300px;
+  background-color: rgb(167, 90, 205);
+  box-shadow:0 8px 16px rgb(141, 140, 140);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px;
+  gap: 8px;
+}
+
+.profile-picture {
+  width: 60px;
+  height: 60px;
+  border: 3px solid white;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+
+.text-developer {
+  color: rgba(255, 255, 255, 0.573);
+  font-size: 12px;
+  font-weight: lighter;
+}
+
+.f-l-name{
+font-size: 24px;
+}
+
+.discription {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.763);
+  line-height: 1.3;
+}
+
+.parent-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 10px;
+  gap: 8px;
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 50%;
+  border: 8px solid white;
+  cursor: pointer;
+}
+
