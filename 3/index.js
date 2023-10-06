@@ -7,6 +7,7 @@ const saveFemaleElement = document.getElementById("female");
 const submitBtn = document.getElementById("submit-btn");
 const sortBtn = document.getElementById("sort-btn");
 const contactsListElement = (document.getElementById("contacts-list"));
+const formActionsElement = (document.getElementById("form-actions"));
 let contactList = [];
 const contactFormData = () => {
     const both = saveFemaleElement.checked && saveMaleElement.checked;
@@ -23,6 +24,35 @@ const contactFormData = () => {
         storage,
     };
 };
+function editFormActionsHandler(id) {
+    const cancelEditElement = document.createElement("button");
+    cancelEditElement.className = "btn mb-3 w-100 btn-primary";
+    cancelEditElement.innerHTML = "Cancel";
+    submitBtn.innerText = "Edit";
+    submitBtn.dataset.mode = "edit";
+    submitBtn.dataset.id = id;
+    cancelEditElement.addEventListener("click", () => {
+        cancelEditElement.remove();
+        submitBtn.innerText = "Submit";
+        submitBtn.dataset.mode = "create";
+        submitBtn.dataset.id = "";
+        resetForm();
+    });
+    formActionsElement.children.length !== 2 &&
+        formActionsElement.append(cancelEditElement);
+}
+function resetForm(contact, edit) {
+    var _a, _b, _c;
+    contactNameElement.value = (_a = contact === null || contact === void 0 ? void 0 : contact.name) !== null && _a !== void 0 ? _a : "";
+    contactPhoneElement.value = (_b = contact === null || contact === void 0 ? void 0 : contact.phone) !== null && _b !== void 0 ? _b : "";
+    saveFemaleElement.checked =
+        (contact === null || contact === void 0 ? void 0 : contact.storage) === "female" || (contact === null || contact === void 0 ? void 0 : contact.storage) === "both" ? true : false;
+    saveMaleElement.checked =
+        (contact === null || contact === void 0 ? void 0 : contact.storage) === "male" || (contact === null || contact === void 0 ? void 0 : contact.storage) === "both" ? true : false;
+    if (edit) {
+        editFormActionsHandler((_c = contact === null || contact === void 0 ? void 0 : contact.id) !== null && _c !== void 0 ? _c : "");
+    }
+}
 const validateFormData = (contact) => {
     const validateData = {
         isValid: true,
@@ -91,8 +121,8 @@ const saveNewContact = (contact) => {
     }
     return contactList;
 };
-const deleteContact = (phone) => {
-    const filteredContactList = contactList.filter((item) => item.phone !== phone);
+const deleteContact = (id) => {
+    const filteredContactList = contactList.filter((item) => item.id !== id);
     contactList = filteredContactList;
     renderContactsList();
 };
@@ -134,10 +164,13 @@ const contactListItemelement = (contact) => {
     const editContactAction = document.createElement("button");
     editContactAction.setAttribute("class", "btn");
     editContactAction.innerText = "Edit";
+    editContactAction.addEventListener("click", () => {
+        resetForm(contact, true);
+    });
     const deleteContactAction = document.createElement("button");
     deleteContactAction.setAttribute("class", "btn");
     deleteContactAction.innerText = "Delete";
-    deleteContactAction.addEventListener("click", () => deleteContact(contact.phone));
+    deleteContactAction.addEventListener("click", () => deleteContact(contact.id));
     contactListItemActions.append(editContactAction, deleteContactAction);
     contactListItem.append(contactListItemInfo, contactListItemActions);
     return contactListItem;
@@ -149,17 +182,32 @@ function renderContactsList() {
     });
 }
 const handleSubmitContact = () => {
-    const contacts = saveNewContact(contactFormData());
+    saveNewContact(contactFormData());
     renderContactsList();
-    console.log(contacts);
+    resetForm();
 };
-submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", handleSubmitContact);
-// sortBtn?.addEventListener("click"()=>sortContact(contact.age))
-// const sortContact=(age:string)=>{
-//   const filteredContactSort = contactList.filter(
-//     (item) => item.age !== age
-//   );
-//   contactList = filteredContactSort;
-//   contactList.sort((a, b) => a.age - b.age);
-//   renderContactsList();
-// }
+const handleEditContact = (id) => {
+    if (!id)
+        return;
+    const currentContactIndex = contactList.findIndex((contact) => contact.id === id);
+    console.log(contactList);
+    console.log(currentContactIndex);
+    const updatedContact = contactFormData();
+    contactList.splice(currentContactIndex, 1, Object.assign(Object.assign({}, updatedContact), { id: id }));
+    renderContactsList();
+};
+submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", () => {
+    var _a;
+    submitBtn.dataset.mode === "edit"
+        ? handleEditContact((_a = submitBtn.dataset.id) !== null && _a !== void 0 ? _a : "")
+        : handleSubmitContact();
+});
+sortBtn === null || sortBtn === void 0 ? void 0 : sortBtn.addEventListener("click", () => sortContact());
+const sortContact = () => {
+    console.log(contactList);
+    contactList.sort((a, b) => {
+        return Number(a.age) - Number(b.age);
+    });
+    console.log(contactList);
+    renderContactsList();
+};

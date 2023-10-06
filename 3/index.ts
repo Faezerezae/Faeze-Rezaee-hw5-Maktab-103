@@ -16,6 +16,9 @@ const sortBtn = <HTMLButtonElement>document.getElementById("sort-btn");
 const contactsListElement = <HTMLUListElement>(
   document.getElementById("contacts-list")
 );
+const formActionsElement = <HTMLDivElement>(
+  document.getElementById("form-actions")
+);
 
 type contactInfoType = {
   name: string;
@@ -43,6 +46,36 @@ const contactFormData = (): contactInfoType => {
     storage,
   };
 };
+
+function editFormActionsHandler(id: string) {
+  const cancelEditElement = document.createElement("button");
+  cancelEditElement.className = "btn mb-3 w-100 btn-primary";
+  cancelEditElement.innerHTML = "Cancel";
+  submitBtn.innerText = "Edit";
+  submitBtn.dataset.mode = "edit";
+  submitBtn.dataset.id = id;
+  cancelEditElement.addEventListener("click", () => {
+    cancelEditElement.remove();
+    submitBtn.innerText = "Submit";
+    submitBtn.dataset.mode = "create";
+    submitBtn.dataset.id = "";
+    resetForm();
+  });
+  formActionsElement.children.length !== 2 &&
+    formActionsElement.append(cancelEditElement);
+}
+
+function resetForm(contact?: contactInfoType, edit?: boolean) {
+  contactNameElement.value = contact?.name ?? "";
+  contactPhoneElement.value = contact?.phone ?? "";
+  saveFemaleElement.checked =
+    contact?.storage === "female" || contact?.storage === "both" ? true : false;
+  saveMaleElement.checked =
+    contact?.storage === "male" || contact?.storage === "both" ? true : false;
+  if (edit) {
+    editFormActionsHandler(contact?.id ?? "");
+  }
+}
 
 type ValidateFormInfoType = {
   isValid: boolean;
@@ -133,10 +166,8 @@ const saveNewContact = (contact: contactInfoType): Array<contactInfoType> => {
   return contactList;
 };
 
-const deleteContact = (phone: string) => {
-  const filteredContactList = contactList.filter(
-    (item) => item.phone !== phone
-  );
+const deleteContact = (id: string) => {
+  const filteredContactList = contactList.filter((item) => item.id !== id);
   contactList = filteredContactList;
   renderContactsList();
 };
@@ -189,12 +220,16 @@ const contactListItemelement = (contact: contactInfoType) => {
   const editContactAction = document.createElement("button");
   editContactAction.setAttribute("class", "btn");
   editContactAction.innerText = "Edit";
+  editContactAction.addEventListener("click", () => {
+    resetForm(contact, true);
+  });
+
   const deleteContactAction = document.createElement("button");
   deleteContactAction.setAttribute("class", "btn");
   deleteContactAction.innerText = "Delete";
 
   deleteContactAction.addEventListener("click", () =>
-    deleteContact(contact.phone)
+    deleteContact(contact.id)
   );
   contactListItemActions.append(editContactAction, deleteContactAction);
 
@@ -211,20 +246,39 @@ function renderContactsList() {
 }
 
 const handleSubmitContact = () => {
-  const contacts = saveNewContact(contactFormData());
+  saveNewContact(contactFormData());
   renderContactsList();
-  console.log(contacts);
+  resetForm();
 };
 
-submitBtn?.addEventListener("click", handleSubmitContact);
+const handleEditContact = (id: string) => {
+  if (!id) return;
+  const currentContactIndex = contactList.findIndex(
+    (contact) => contact.id === id
+  );
+  console.log(contactList);
+  console.log(currentContactIndex);
+  const updatedContact = contactFormData();
+  contactList.splice(currentContactIndex, 1, {
+    ...updatedContact,
+    id: id,
+  });
+  renderContactsList();
+};
 
-// sortBtn?.addEventListener("click"()=>sortContact(contact.age))
+submitBtn?.addEventListener("click", () => {
+  submitBtn.dataset.mode === "edit"
+    ? handleEditContact(submitBtn.dataset.id ?? "")
+    : handleSubmitContact();
+});
 
-// const sortContact=(age:string)=>{
-//   const filteredContactSort = contactList.filter(
-//     (item) => item.age !== age
-//   );
-//   contactList = filteredContactSort;
-//   contactList.sort((a, b) => a.age - b.age);
-//   renderContactsList();
-// }
+sortBtn?.addEventListener("click", () => sortContact());
+
+const sortContact = () => {
+  console.log(contactList);
+  contactList.sort((a: contactInfoType, b: contactInfoType) => {
+    return Number(a.age) - Number(b.age);
+  });
+  console.log(contactList);
+  renderContactsList();
+};
